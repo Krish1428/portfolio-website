@@ -21,11 +21,13 @@ export const InteractiveTerminal: React.FC = () => {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [isHackingState, setIsHackingState] = useState(false);
   
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const terminalContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (terminalContainerRef.current) {
+      terminalContainerRef.current.scrollTop = terminalContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -351,7 +353,7 @@ export const InteractiveTerminal: React.FC = () => {
       </div>
 
       {/* Terminal Output */}
-      <div className="flex-1 overflow-y-auto pr-2 space-y-2 pb-4 scroll-smooth">
+      <div ref={terminalContainerRef} className="flex-1 overflow-y-auto pr-2 space-y-2 pb-4 scroll-smooth">
         {lines.map((line, index) => (
           <div key={index} className="flex flex-col">
             <div className={`whitespace-pre-wrap ${
@@ -375,7 +377,6 @@ export const InteractiveTerminal: React.FC = () => {
             <span>[SIMULATION IN PROGRESS: INTRUSION PAYLOADS SPREADING...]</span>
           </div>
         )}
-        <div ref={terminalEndRef} />
       </div>
 
       {/* Terminal Input Form */}

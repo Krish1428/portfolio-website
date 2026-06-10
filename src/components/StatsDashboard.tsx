@@ -22,7 +22,7 @@ interface LiveMetrics {
 export const StatsDashboard: React.FC = () => {
   const [metrics, setMetrics] = useState<LiveMetrics | null>(null);
   const [connection, setConnection] = useState<'connecting' | 'online' | 'offline'>('connecting');
-  const logEndRef = useRef<HTMLDivElement>(null);
+  const logContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setConnection('connecting');
@@ -55,8 +55,8 @@ export const StatsDashboard: React.FC = () => {
 
   // Auto scroll live log tail
   useEffect(() => {
-    if (logEndRef.current) {
-      logEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (logContainerRef.current) {
+      logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
     }
   }, [metrics?.recentLogs]);
 
@@ -212,7 +212,7 @@ export const StatsDashboard: React.FC = () => {
 
         {/* Real-time console logs stream */}
         <div className="bg-cyber-black/95 rounded border border-neutral-900 p-4 h-48 flex flex-col justify-between font-mono text-[11px] leading-relaxed">
-          <div className="overflow-y-auto space-y-1 pr-2 max-h-[160px] scrollbar-thin select-text">
+          <div ref={logContainerRef} className="overflow-y-auto space-y-1 pr-2 max-h-[160px] scrollbar-thin select-text">
             {metrics?.recentLogs && metrics.recentLogs.length > 0 ? (
               metrics.recentLogs.map((log, index) => {
                 let colorClass = 'text-gray-400';
@@ -234,7 +234,6 @@ export const StatsDashboard: React.FC = () => {
                 Establishing communication gates. Listening for inbound traffic logs...
               </div>
             )}
-            <div ref={logEndRef} />
           </div>
 
           <div className="flex items-center justify-between border-t border-neutral-900 pt-2 mt-2 text-[9px] text-gray-500 select-none">
