@@ -1,0 +1,5 @@
+# robots.txt for krishnabk1.com.np
+User-agent: *
+Allow: /
+
+Sitemap: https://krishnabk1.com.np/sitemap.xml

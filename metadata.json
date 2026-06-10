@@ -1,0 +1,6 @@
+{
+  "name": "Krishna BK Portfolio",
+  "description": "Cybersecurity Portfolio and Terminal Dashboard for Krishna B.K.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
